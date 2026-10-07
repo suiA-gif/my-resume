@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2b7fbd" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#061520" media="(prefers-color-scheme: dark)">
+<meta name="description" content="马越 · 环境科学大一 | 人工智能训练师（初级/高级） | HTML 网页制作 · 个人简历">
+<meta name="format-detection" content="telephone=no">
+<title>马越 · 个人简历</title>
+
+<script>
+(function () {
+  try {
+    var saved = localStorage.getItem('resume-theme');
+    var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', saved || (dark ? 'dark' : 'light'));
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
+
+<style>
+:root {
+  --bg: #eef5fa; --card: #ffffff; --card-2: #f4f9fd;
+  --text: #0b1c28; --muted: #4b6478; --faint: #86a1b5;
+  --border: #d9e7f1; --primary: #2b7fbd; --primary-2: #5cc0e6;
+  --primary-soft: rgba(43,127,189,.10);
+  --accent: #e59a3c; --accent-soft: rgba(229,154,60,.13);
+  --nav-bg: rgba(238,245,250,.82);
+  --shadow-sm: 0 1px 2px rgba(14,46,68,.06);
+  --shadow-md: 0 6px 20px rgba(14,46,68,.09);
+  --radius: 16px;
+}
+html[data-theme="dark"] {
+  --bg: #061520; --card: #0e2534; --card-2: #122b3b;
+  --text: #e6f2fa; --muted: #9bb8cc; --faint: #6d8ea6;
+  --border: #1b3a4d; --primary: #4db4e6; --primary-2: #7fd8f5;
+  --primary-soft: rgba(77,180,230,.14);
+  --accent: #f0b45f; --accent-soft: rgba(240,180,95,.14);
+  --nav-bg: rgba(6,21,32,.82);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.42);
+  --shadow-md: 0 6px 20px rgba(0,0,0,.46);
+}
+
+* { box-sizing: border-box; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 64px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+html[data-theme="dark"] { color-scheme: dark; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC",
+    "Noto Sans CJK SC", sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color .25s ease, color .25s ease;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+::selection { background: var(--primary-soft); color: var(--primary); }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+img { max-width: 100%; height: auto; display: block; }
+
+/* ============================================================
+   滚动进度条
+   ============================================================ */
+.scroll-bar {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px;
+  z-index: 70; pointer-events: none;
+}
+.scroll-bar i {
+  display: block; height: 100%; width: 0;
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  transition: width .1s linear;
+}
+
+/* ============================================================
+   顶部导航
+   ============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  background: var(--nav-bg);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .25s ease;
+}
+.nav.scrolled { border-bottom-color: var(--border); }
+.nav-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 14px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; font-size: 15px;
+}
+.brand-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  box-shadow: 0 0 0 3px var(--primary-soft);
+  flex-shrink: 0;
+}
+.brand-sub { color: var(--faint); font-weight: 500; font-size: 12px; }
+.nav-links { display: none; }
+.nav-actions { margin-left: auto; display: flex; gap: 8px; align-items: center; }
+.icon-btn {
+  width: 42px; height: 42px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted);
+  padding: 0;
+  transition: transform .15s ease, color .15s ease, border-color .15s ease;
+}
+.icon-btn:hover, .icon-btn:active { color: var(--primary); border-color: var(--primary); }
+.icon-btn:active { transform: scale(.94); }
+
+/* ============================================================
+   底部快捷导航（移动端）
+   ============================================================ */
+.quick-nav {
+  position: fixed;
+  left: 10px; right: 10px;
+  bottom: 10px;
+  z-index: 55;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  padding: 4px 4px max(4px, env(safe-area-inset-bottom));
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.quick-nav::-webkit-scrollbar { display: none; }
+.quick-nav a {
+  flex: 1 0 auto;
+  min-width: 58px;
+  min-height: 46px;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  transition: color .15s ease, background-color .15s ease;
+}
+.quick-nav a.active, .quick-nav a:active {
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+
+/* ============================================================
+   容器
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 14px;
+}
+main { padding-bottom: 96px; }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero {
+  position: relative;
+  padding: 84px 0 36px;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: -30% -10% auto -10%; height: 130%;
+  background:
+    radial-gradient(620px 340px at 10% 6%, var(--primary-soft), transparent 72%),
+    radial-gradient(520px 300px at 92% 2%, var(--primary-soft), transparent 72%);
+  pointer-events: none;
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  display: grid;
+  gap: 18px;
+}
+.eyebrow {
+  margin: 0 0 6px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2.4px; text-transform: uppercase;
+  color: var(--primary);
+}
+.hero h1 {
+  margin: 4px 0 10px;
+  font-size: clamp(34px, 9vw, 52px);
+  line-height: 1.05;
+  letter-spacing: -1.2px;
+  font-weight: 800;
+  display: flex; flex-wrap: wrap; align-items: baseline;
+}
+.name-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(.6em) scale(.6);
+  background: linear-gradient(118deg, var(--text) 20%, var(--primary) 96%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: charDrop 1.1s cubic-bezier(.2,.9,.28,1) forwards;
+}
+@keyframes charDrop {
+  0%   { opacity: 0; transform: translateY(.7em) scale(.55); }
+  40%  { opacity: 1; transform: translateY(-.14em) scale(1.1); }
+  70%  { transform: translateY(.05em) scale(.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.hero-sub {
+  margin: 0 0 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+.hero-desc {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.badges {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 16px;
+}
+.badge {
+  font-size: 12px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.badge.primary {
+  background: var(--primary-soft);
+  border-color: transparent;
+  color: var(--primary);
+  font-weight: 600;
+}
+.cta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 14.5px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform .15s ease, border-color .15s ease, color .15s ease;
+}
+.btn svg { flex-shrink: 0; }
+.btn:active { transform: scale(.97); }
+.btn-primary {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+  box-shadow: 0 8px 20px -10px var(--primary);
+}
+.btn-ghost {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--text);
+}
+.btn-ghost:hover, .btn-ghost:active {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+.copy-hint {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--primary);
+  font-weight: 600;
+  min-height: 18px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.copy-hint.show { opacity: 1; transform: translateY(0); }
+
+/* ============================================================
+   个人名片
+   ============================================================ */
+.hero-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.hero-card::before {
+  content: "";
+  position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-2), var(--accent));
+}
+.hc-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+/* ============================================================
+   头像 —— 纯 HTML img 直接引用 6.jpg
+   ============================================================ */
+.avatar {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  box-shadow: 0 8px 20px -10px var(--primary),
+              0 0 0 3px var(--card),
+              0 0 0 4px var(--border);
+  /* 防止图片变形 */
+  position: relative;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: 0;
+  /* 保险：即使图片暂时没加载，容器也保持形状 */
+  background: transparent;
+}
+
+.hc-name { font-size: 17px; font-weight: 700; letter-spacing: .3px; }
+.hc-role { font-size: 12.5px; color: var(--faint); margin-top: 2px; }
+.hc-list { margin: 0; display: grid; gap: 10px; }
+.hc-list > div {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  gap: 10px;
+  align-items: baseline;
+}
+.hc-list dt { font-size: 12px; color: var(--faint); }
+.hc-list dd {
+  margin: 0;
+  font-size: 13.5px;
+  word-break: break-word;
+}
+.hc-list a {
+  color: var(--primary);
+  font-weight: 600;
+  display: inline-block;
+  padding: 4px 0;
+  min-height: 32px;
+}
+.hc-foot {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dot-live {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+  flex-shrink: 0;
+  animation: pulse 2.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px var(--primary-soft); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* ============================================================
+   Section
+   ============================================================ */
+.section { padding: 34px 0; }
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.section-head h2 {
+  margin: 0;
+  font-size: 19px;
+  letter-spacing: -.4px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.sec-num {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+  color: var(--primary);
+  font-variant-numeric: tabular-nums;
+}
+.section-head .hint {
+  font-size: 12px;
+  color: var(--faint);
+}
+
+/* ============================================================
+   亮点成果
+   ============================================================ */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.hl-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.hl-value {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -.6px;
+  line-height: 1.15;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+.hl-label {
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.hl-desc {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* ============================================================
+   证书实拍 —— 纯 HTML img 直接引用 2.jpg / 3.jpg
+   ============================================================ */
+.cert-block { margin-top: 28px; }
+.cert-block-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.cert-block-head h3 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cert-block-head h3 svg { color: var(--primary); }
+.cert-block-head .cbt-hint {
+  font-size: 12px;
+  color: var(--faint);
+  margin-left: auto;
+}
+.cert-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.cert-card {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 12px 14px;
+  box-shadow: var(--shadow-sm);
+}
+.cert-img-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  aspect-ratio: 4 / 3;
+}
+.cert-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border: 0;
+  cursor: zoom-in;
+}
+.cert-img-wrap::after {
+  content: "点击放大";
+  position: absolute;
+  right: 8px; bottom: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(11,28,40,.6);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  padding: 3px 8px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+.cert-card figcaption { padding: 11px 2px 0; }
+.cert-card h4 {
+  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.cert-level {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.cert-card p {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ============================================================
+   标签页
+   ============================================================ */
+.tabbar {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: 16px;
+}
+.tabbar::-webkit-scrollbar { display: none; }
+.tab {
+  flex: 1 0 auto;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 10px;
+  white-space: nowrap;
+  transition: color .15s ease, background-color .15s ease;
+}
+.tab:hover, .tab:active { color: var(--primary); }
+.tab[aria-selected="true"] {
+  background: var(--card);
+  color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+.tabpanel { animation: fadeUp .3s ease both; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+.tabpanel[hidden] { display: none; }
+
+/* ============================================================
+   经历 / 项目
+   ============================================================ */
+.exp-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.exp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.exp-role {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+}
+.exp-org {
+  font-size: 13px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-top: 2px;
+}
+.exp-period {
+  font-size: 12px;
+  color: var(--faint);
+  white-space: nowrap;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
+}
+.points {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+.points li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+.points li:last-child { margin-bottom: 0; }
+.points li::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 8px;
+  width: 6px; height: 6px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  transform: rotate(45deg);
+}
+
+.projects {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+.proj-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.proj-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.proj-name {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 700;
+}
+.proj-role {
+  font-size: 12.5px;
+  color: var(--primary);
+  font-weight: 600;
+  margin-top: 3px;
+}
+.proj-tag {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 12px;
+}
+.stack span {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+
+/* ============================================================
+   技能矩阵
+   ============================================================ */
+.skill-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.skill-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.skill-card h3 {
+  margin: 0 0 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sk-ico { color: var(--primary); display: inline-grid; place-items: center; }
+.skill-row { margin-bottom: 12px; }
+.skill-row:last-child { margin-bottom: 0; }
+.skill-row .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+.sk-lv { font-size: 11.5px; color: var(--faint); white-space: nowrap; }
+.bar {
+  height: 6px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--card-2);
+  border: 1px solid var(--border);
+}
+.bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  transition: width .8s cubic-bezier(.22,.8,.22,1);
+}
+
+/* ============================================================
+   时间线
+   ============================================================ */
+.timeline {
+  position: relative;
+  padding-left: 20px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--primary), var(--primary-soft), transparent);
+  border-radius: 2px;
+}
+.tl-item {
+  position: relative;
+  margin-bottom: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.tl-item:last-child { margin-bottom: 0; }
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: -20px; top: 20px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 3px solid var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+.tag-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.awards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.award {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 13px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+}
+.award svg { color: var(--accent); flex-shrink: 0; }
+
+/* ============================================================
+   页脚
+   ============================================================ */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 32px;
+  text-align: center;
+  color: var(--faint);
+  font-size: 12.5px;
+}
+.foot-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.site-footer strong { color: var(--muted); font-weight: 600; }
+.foot-sep { opacity: .5; }
+
+/* ============================================================
+   返回顶部
+   ============================================================ */
+#toTop {
+  position: fixed;
+  right: 14px;
+  bottom: 76px;
+  z-index: 50;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--primary);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px) scale(.96);
+  transition: opacity .2s ease, transform .2s ease;
+  padding: 0;
+}
+#toTop.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+#toTop:active { transform: scale(.94); }
+
+/* ============================================================
+   灯箱
+   ============================================================ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 40px 16px;
+  background: rgba(6,21,32,.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s ease;
+}
+.lightbox.show { opacity: 1; pointer-events: auto; }
+.lightbox img {
+  max-width: 94vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 30px 70px rgba(0,0,0,.55);
+  transform: scale(.96);
+  transition: transform .25s ease;
+}
+.lightbox.show img { transform: scale(1); }
+.lb-close {
+  position: absolute;
+  top: max(14px, env(safe-area-inset-top));
+  right: 14px;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  padding: 0;
+}
+.lb-caption {
+  position: absolute;
+  left: 50%;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  color: rgba(255,255,255,.88);
+  font-size: 12.5px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+  padding: 6px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  max-width: 90vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* ============================================================
+   平板
+   ============================================================ */
+@media (min-width: 640px) {
+  .container { padding: 0 20px; }
+  .nav-inner { height: 62px; padding: 0 20px; }
+  .nav-links {
+    display: flex;
+    gap: 2px;
+    margin-left: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a {
+    padding: 8px 12px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--primary);
+    background: var(--primary-soft);
+  }
+  .nav-links a.active { font-weight: 600; }
+
+  .hero { padding: 96px 0 44px; }
+  .hero-inner {
+    grid-template-columns: 1.5fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .cta-row { grid-template-columns: auto auto auto; }
+  .btn-primary { grid-column: auto; }
+
+  .highlights { grid-template-columns: repeat(3, 1fr); }
+  .cert-gallery { grid-template-columns: repeat(2, 1fr); }
+  .projects { grid-template-columns: repeat(2, 1fr); }
+  .skill-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .quick-nav { display: none; }
+  main { padding-bottom: 40px; }
+  #toTop { bottom: 22px; right: 22px; }
+}
+
+@media (min-width: 900px) {
+  body { font-size: 16px; }
+  .section { padding: 44px 0; }
+  .highlights { grid-template-columns: repeat(4, 1fr); }
+  .skill-grid { grid-template-columns: repeat(3, 1fr); }
+  .hero-card { padding: 22px; }
+  .avatar { width: 76px; height: 76px; border-radius: 22px; }
+  .hc-name { font-size: 17.5px; }
+  .exp-item, .proj-card, .skill-card, .tl-item, .cert-card {
+    transition: transform .2s ease, border-color .2s ease;
+  }
+  .exp-item:hover, .proj-card:hover, .skill-card:hover,
+  .tl-item:hover, .cert-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+  }
+}
+
+@media (min-width: 1200px) {
+  .highlights { grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .name-char { animation: none !important; opacity: 1 !important; transform: none !important; color: var(--text) !important; -webkit-text-fill-color: currentColor !important; background: none !important; }
+}
+
+@media print {
+  :root, html[data-theme="dark"] {
+    --bg: #fff; --card: #fff; --card-2: #fff;
+    --text: #101010; --muted: #3a3a3a; --faint: #6a6a6a;
+    --border: #d8d8d8; --primary: #17618f; --primary-2: #17618f;
+    --primary-soft: #eef5fa; --accent: #a8681a; --accent-soft: #fdf3e6;
+    --nav-bg: #fff; --shadow-sm: none; --shadow-md: none;
+  }
+  @page { margin: 12mm; }
+  body { background: #fff !important; color: #101010 !important; font-size: 12px; }
+  .nav, #toTop, .quick-nav, .cta-row, .copy-hint, .tabbar,
+  .scroll-bar, .lightbox, .cert-img-wrap::after { display: none !important; }
+  .container { max-width: 100%; padding: 0; }
+  main { padding-bottom: 0; }
+  .hero { padding: 0 0 8px; }
+  .hero h1 { font-size: 26px; }
+  .name-char { -webkit-text-fill-color: #101010; color: #101010; background: none; animation: none; opacity: 1; transform: none; }
+  .hero-inner { display: block; }
+  .hero-card { margin-top: 12px; box-shadow: none; border: 1px solid #d8d8d8; }
+  .section { padding: 10px 0; }
+  .tabpanel[hidden] { display: block !important; }
+  .hl-card, .exp-item, .proj-card, .skill-card, .tl-item, .award, .cert-card {
+    box-shadow: none; border: 1px solid #d8d8d8;
+  }
+  .highlights { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .cert-gallery, .projects, .skill-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .cert-img-wrap { aspect-ratio: auto; }
+  .cert-img-wrap img { height: auto; max-height: 140px; object-fit: contain; }
+  .avatar { box-shadow: none; border: 1px solid #d8d8d8; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="scroll-bar" aria-hidden="true"><i id="scrollBar"></i></div>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#hero">
+      <span class="brand-dot" aria-hidden="true"></span>
+      马越<span class="brand-sub">· 简历</span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="页面导航"></nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="切换主题" title="切换主题"></button>
+      <button class="icon-btn" id="printBtn" type="button" aria-label="打印简历" title="打印 / 导出 PDF"></button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================================
+       Hero
+       ============================================================ -->
+  <section class="hero" id="hero" aria-label="个人摘要">
+    <div class="container hero-inner">
+
+      <div>
+        <p class="eyebrow">Environmental Science · AI Trainer · Data</p>
+        <h1 aria-label="马越">
+          <span class="name-char" aria-hidden="true" style="animation-delay:.1s">马</span><span class="name-char" aria-hidden="true" style="animation-delay:.35s">越</span>
+        </h1>
+        <p class="hero-sub">环境科学大一 ｜ 人工智能训练师（初级 / 高级） ｜ HTML 网页制作</p>
+        <p class="hero-desc">
+          18 岁，来自重庆荣昌，一个秉持“先做对的事，再把事做对”的环科人。做事准则：先想，后做；做事三部曲：先做 → 做对 → 做得更好。
+        </p>
+
+        <div class="badges" aria-label="技能关键词">
+          <span class="badge primary">环境科学</span>
+          <span class="badge primary">AI 训练师</span>
+          <span class="badge">数据标注</span>
+          <span class="badge">HTML</span>
+          <span class="badge">数据分析</span>
+          <span class="badge">可持续发展</span>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="tel:15215181738">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            15215181738
+          </a>
+          <button class="btn btn-ghost" id="copyEmail" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 7 8.4 5.6a1.2 1.2 0 0 0 1.2 0L21 7"/></svg>
+            复制邮箱
+          </button>
+          <button class="btn btn-ghost" id="heroPrint" type="button">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2.5"/><path d="M6 17h12v4H6z"/></svg>
+            导出 PDF
+          </button>
+        </div>
+        <p class="copy-hint" id="copyHint" role="status" aria-live="polite"></p>
+      </div>
+
+      <aside class="hero-card" aria-label="个人名片">
+        <div class="hc-head">
+          <div class="avatar">
+            <!-- 大头照：6.jpg，直接引用，无任何 JS 干预 -->
+            <img src="6.jpg" alt="马越 · 个人证件照" width="76" height="76" loading="lazy" decoding="async">
+          </div>
+          <div>
+            <div class="hc-name">马越</div>
+            <div class="hc-role">环境科学 · 大一在读</div>
+          </div>
+        </div>
+
+        <dl class="hc-list">
+          <div><dt>求职方向</dt><dd>环境科学 / 数据分析 / AI 训练 / 可持续发展</dd></div>
+          <div><dt>籍贯 / 年龄</dt><dd>重庆 · 荣昌 · 18 岁</dd></div>
+          <div><dt>联系电话</dt><dd><a href="tel:15215181738">15215181738</a></dd></div>
+          <div><dt>电子邮箱</dt><dd><a href="mailto:3105429861@qq.com">3105429861@qq.com</a></dd></div>
+          <div><dt>在线作品</dt><dd>HTML 个人网页简历（源码可交付）</dd></div>
+        </dl>
+
+        <div class="hc-foot">
+          <span class="dot-live" aria-hidden="true"></span>
+          可随时到岗 · 接受实习与项目合作
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       01 亮点成果
+       ============================================================ -->
+  <section class="section" id="highlights" aria-labelledby="highlightsTitle">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="highlightsTitle"><span class="sec-num">01</span>亮点成果</h2>
+        <span class="hint">30 秒速览</span>
+      </div>
+      <div class="highlights" id="hlGrid"></div>
+
+      <!-- 证书实拍：2.jpg / 3.jpg，直接引用，无任何 JS 干预 -->
+      <div class="cert-block">
+        <div class="cert-block-head">
+          <h3>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.2"/><path d="M8.6 13.6 7 22l5-2.6L17 22l-1.6-8.4"/></svg>
+            证书实拍
+          </h3>
+          <span class="cbt-hint">点击放大</span>
+        </div>
+        <div class="cert-gallery">
+
+          <figure class="cert-card">
+            <div class="cert-img-wrap">
+              <img src="2.jpg" alt="人工智能训练师（初级）证书" width="600" height="450" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <h4>人工智能训练师（初级）证书<span class="cert-level">初级</span></h4>
+              <p>掌握数据标注规范、数据清洗与基础质检流程，具备辅助 AI 项目数据准备与标注的实战能力。</p>
+            </figcaption>
+          </figure>
+
+          <figure class="cert-card">
+            <div class="cert-img-wrap">
+              <img src="3.jpg" alt="人工智能训练师（高级）证书" width="600" height="450" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <h4>人工智能训练师（高级）证书<span class="cert-level">高级</span></h4>
+              <p>覆盖数据标注、数据清洗、质量检查与基础模型训练全流程，可独立完成标注质量验收。</p>
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       02 工作 / 校园经历
+       ============================================================ -->
+  <section class="section" id="experience" aria-labelledby="expTitle">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="expTitle"><span class="sec-num">02</span>工作 / 校园经历</h2>
+        <span class="hint">倒序排列</span>
+      </div>
+      <div class="tabbar" role="tablist" id="expTabs" aria-label="经历分类切换"></div>
+      <div id="expPanels"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       03 项目经历
+       ============================================================ -->
+  <section class="section" id="projects" aria-labelledby="projTitle">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="projTitle"><span class="sec-num">03</span>项目经历</h2>
+        <span class="hint">独立完成 / 可交付</span>
+      </div>
+      <div class="tabbar" role="tablist" id="projTabs" aria-label="项目分类切换"></div>
+      <div id="projPanels"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       04 技能矩阵
+       ============================================================ -->
+  <section class="section" id="skills" aria-labelledby="skillTitle">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="skillTitle"><span class="sec-num">04</span>技能矩阵</h2>
+        <span class="hint">网页 / AI / 语言 / 工具 / 领域</span>
+      </div>
+      <div class="skill-grid" id="skillGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       05 教育背景与证书
+       ============================================================ -->
+  <section class="section" id="education" aria-labelledby="eduTitle">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="eduTitle"><span class="sec-num">05</span>教育背景与证书</h2>
+        <span class="hint">2023 — 至今</span>
+      </div>
+      <div class="timeline" id="eduTimeline"></div>
+      <div class="awards" id="awardList" aria-label="获奖与证书"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-line">
+      <strong>马越</strong>
+      <span class="foot-sep">·</span>
+      <span>环境科学 · AI 训练师 · HTML 网页制作</span>
+      <span class="foot-sep">·</span>
+      <span>© <span id="year"></span></span>
+      <span class="foot-sep">·</span>
+      <span>更新于 <span id="updated"></span></span>
+    </div>
+  </div>
+</footer>
+
+<nav class="quick-nav" id="quickNav" aria-label="快捷导航"></nav>
+
+<button id="toTop" type="button" aria-label="返回顶部"></button>
+
+<script defer>
+(function () {
+  "use strict";
+
+  var resume = {
+    name: "马越",
+    highlights: [
+      { value: "30%↑", label: "作业收交效率提升", desc: "建立未交名单与错题跟踪清单，数学课代表任内收交效率提升约 30%。" },
+      { value: "TOP 3", label: "英语成绩稳居班级前三", desc: "多次大考英语成绩位列班级前三，获评“学习之星”。" },
+      { value: "95%+", label: "数据标注准确率", desc: "自建标注复核清单，文本 / 图像标注准确率稳定在 95% 以上。" },
+      { value: "双证", label: "人工智能训练师认证", desc: "初级 + 高级双证，覆盖数据标注、数据清洗与质量验收全流程。" },
+      { value: "1 个", label: "独立完成的个人网站", desc: "从 0 到 1 搭建响应式 HTML 网页简历，源码可直接交付。" }
+    ],
+    experience: [
+      { tab: "二十九中", org: "重庆第二十九中学", role: "数学课代表", type: "校园职务", period: "2023.09 — 2026.06", points: [
+        "负责全班数学作业收发、假期作业检查与学情反馈，建立未交 / 错题跟踪清单，作业收交效率提升约 30%。",
+        "每周汇总高频错题与薄弱知识点，协助老师组织讲题与小组互助，推动班级形成稳定的错题复盘机制。",
+        "作为师生沟通桥梁，及时反馈学习进度与共性问题，获评“进步之星”。",
+        "多次考试英语成绩稳居班级前三，兼顾课代表工作与个人学习，具备出色的时间管理与多任务处理能力。"
+      ]},
+      { tab: "巴川中学", org: "重庆市巴川中学校", role: "英语课代表", type: "校园职务", period: "2023.09 — 2026.06", points: [
+        "负责英语作业收发与学情反馈，按周整理未交名单、作业质量与错题分布，显著提升信息传递效率。",
+        "协助组织早读、单词互测与英语学习小组，带动同学参与度，营造稳定高效的学习氛围。",
+        "获评“学习之星”，沉淀出可复用的学习计划模板与每周复盘方法。",
+        "主动与老师沟通教学反馈，推动作业布置与讲评更贴合班级实际水平。"
+      ]}
+    ],
+    projects: [
+      { cat: "网页开发", name: "个人 HTML 网页简历 / 作品集", role: "独立开发", period: "2026.09 — 至今", tag: "独立开发", stack: ["HTML5", "CSS", "JavaScript", "响应式"], points: [
+        "独立从 0 到 1 搭建个人网页简历，完成导航、个人信息、教育背景、技能证书、项目经历等完整模块。",
+        "使用 HTML 语义化标签与基础样式，实现电脑端 / 手机端清晰阅读，主流浏览器兼容良好。",
+        "将静态简历升级为可在线分享的网页，HR 查看路径缩短至 1 次点击，显著提升投递与展示效率。",
+        "持续迭代排版与信息层级，核心信息首屏可见，页面结构清晰、维护成本低、源码可交付。"
+      ]},
+      { cat: "AI 训练", name: "人工智能训练师认证与数据标注实训", role: "学员 / 认证者", period: "2024 — 2026", tag: "双证", stack: ["数据标注", "数据清洗", "质量检查", "模型训练流程"], points: [
+        "系统学习人工智能基础、数据标注规范、数据清洗与质量检查流程，完成文本 / 图像标注实训任务。",
+        "建立个人标注检查清单与二次复核流程，标注准确率稳定在 95% 以上，返工率明显下降。",
+        "通过人工智能训练师（初级 / 高级）认证，具备辅助 AI 项目数据准备、标注与质量验收的实战能力。",
+        "输出学习笔记与操作模板，提升个人任务执行效率，为后续“AI + 环境数据”方向打下基础。"
+      ]}
+    ],
+    skills: [
+      { group: "网页 / 前端", items: [
+        { name: "HTML 语义化与页面结构", level: 78, label: "熟练" },
+        { name: "CSS 基础排版与响应式", level: 70, label: "掌握" },
+        { name: "JavaScript 基础交互", level: 60, label: "了解" }
+      ]},
+      { group: "人工智能", items: [
+        { name: "数据标注与规范执行", level: 86, label: "熟练" },
+        { name: "数据清洗与质量检查", level: 78, label: "熟练" },
+        { name: "基础模型训练流程", level: 66, label: "掌握" }
+      ]},
+      { group: "语言能力", items: [
+        { name: "英语读写与信息检索", level: 82, label: "熟练" },
+        { name: "中文表达与文档整理", level: 90, label: "精通" }
+      ]},
+      { group: "办公工具", items: [
+        { name: "Word / Excel / PPT", level: 82, label: "熟练" },
+        { name: "简历与报告排版", level: 76, label: "熟练" }
+      ]},
+      { group: "领域认知", items: [
+        { name: "环境科学基础", level: 70, label: "掌握" },
+        { name: "垃圾分类 / 低碳 / 水资源", level: 68, label: "掌握" },
+        { name: "可持续发展议题关注", level: 74, label: "掌握" }
+      ]}
+    ],
+    education: [
+      { school: "重庆三峡科技大学", major: "环境科学（本科）", tag: "在读", period: "2026.09 — 至今", points: [
+        "系统学习环境科学导论、基础化学、高等数学等课程，建立环境系统与数据分析的基础认知。",
+        "主动参与专业讲座与校园环保活动，围绕“双碳”、垃圾分类、水资源保护等议题拓展行业视野。",
+        "规划方向：环境监测、数据分析、AI + 环境应用，持续积累项目与实习经历。"
+      ]},
+      { school: "重庆市巴川中学校 / 重庆第二十九中学", major: "理科方向", tag: "初高中", period: "2023.09 — 2026.06", points: [
+        "担任英语课代表、数学课代表，负责作业收发、假期作业检查与学情反馈，搭建师生信息通道。",
+        "英语成绩多次稳居班级前三，获“学习之星”“进步之星”称号。",
+        "形成“先想后做、先做对再做好”的学习与执行方法，具备较强的自律性与复盘能力。"
+      ]}
+    ],
+    awards: [
+      "人工智能训练师（高级）证书",
+      "人工智能训练师（初级）证书",
+      "学习之星 ｜ 巴川中学校",
+      "进步之星 ｜ 二十九中",
+      "英语成绩多次班级前三",
+      "英语 / 数学课代表任职经历"
+    ],
+    nav: [
+      { href: "#highlights", text: "亮点" },
+      { href: "#experience", text: "经历" },
+      { href: "#projects", text: "项目" },
+      { href: "#skills", text: "技能" },
+      { href: "#education", text: "教育" }
+    ],
+    updated: "2026.10"
+  };
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var ICONS = {
+    sun: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.2v2.2M12 19.6v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.2 12h2.2M19.6 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></svg>',
+    moon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.9A9 9 0 1 1 11.1 3a7 7 0 0 0 9.9 9.9z"/></svg>',
+    print: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2.5"/><path d="M6 17h12v4H6z"/></svg>',
+    check: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+    mail: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 7 8.4 5.6a1.2 1.2 0 0 0 1.2 0L21 7"/></svg>',
+    award: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="5.2"/><path d="M8.6 13.6 7 22l5-2.6L17 22l-1.6-8.4"/></svg>',
+    spark: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3.2M12 17.8V21M3 12h3.2M17.8 12H21M5.6 5.6l2.3 2.3M16.1 16.1l2.3 2.3M5.6 18.4l2.3-2.3M16.1 7.9l2.3-2.3"/></svg>',
+    up: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></svg>'
+  };
+
+  function renderNav() {
+    $("#navLinks").innerHTML = resume.nav.map(function (n) {
+      return '<a href="' + n.href + '">' + esc(n.text) + "</a>";
+    }).join("");
+    $("#quickNav").innerHTML = resume.nav.map(function (n, i) {
+      return '<a href="' + n.href + '"' + (i === 0 ? ' class="active"' : '') + '>' + esc(n.text) + "</a>";
+    }).join("");
+  }
+
+  function renderHighlights() {
+    $("#hlGrid").innerHTML = resume.highlights.map(function (h) {
+      return '<article class="hl-card reveal">' +
+        '<div class="hl-value">' + esc(h.value) + "</div>" +
+        '<div class="hl-label">' + esc(h.label) + "</div>" +
+        '<p class="hl-desc">' + esc(h.desc) + "</p>" +
+      "</article>";
+    }).join("");
+  }
+
+  function setupTabs(root, tabSel, panelSel) {
+    var tabs = $$(tabSel, root);
+    var panels = $$(panelSel, root);
+    if (!tabs.length) return;
+    function select(index, focus) {
+      tabs.forEach(function (t, i) {
+        var on = i === index;
+        t.setAttribute("aria-selected", on ? "true" : "false");
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panels.forEach(function (p, i) {
+        if (i === index) {
+          p.removeAttribute("hidden");
+          p.style.animation = "none";
+          void p.offsetWidth;
+          p.style.animation = "";
+        } else {
+          p.setAttribute("hidden", "");
+        }
+      });
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { select(i, false); });
+    });
+    root.addEventListener("keydown", function (e) {
+      var cur = tabs.findIndex(function (t) { return t.getAttribute("aria-selected") === "true"; });
+      if (cur < 0) return;
+      var next = -1;
+      if (e.key === "ArrowRight") next = (cur + 1) % tabs.length;
+      else if (e.key === "ArrowLeft") next = (cur - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = tabs.length - 1;
+      if (next >= 0) { e.preventDefault(); select(next, true); }
+    });
+  }
+
+  function renderExperience() {
+    var list = resume.experience;
+    $("#expTabs").innerHTML = list.map(function (e, i) {
+      return '<button class="tab" type="button" role="tab" id="exp-tab-' + i + '" aria-controls="exp-panel-' + i + '" aria-selected="' + (i === 0 ? "true" : "false") + '" tabindex="' + (i === 0 ? "0" : "-1") + '">' + esc(e.tab) + "</button>";
+    }).join("");
+    $("#expPanels").innerHTML = list.map(function (e, i) {
+      return '<div class="tabpanel" role="tabpanel" id="exp-panel-' + i + '" aria-labelledby="exp-tab-' + i + '" tabindex="0"' + (i === 0 ? "" : " hidden") + ">" +
+        '<article class="exp-item">' +
+          '<div class="exp-head">' +
+            "<div>" +
+              '<h3 class="exp-role">' + esc(e.role) + "</h3>" +
+              '<div class="exp-org">' + esc(e.org) + " · " + esc(e.type) + "</div>" +
+            "</div>" +
+            '<span class="exp-period">' + esc(e.period) + "</span>" +
+          "</div>" +
+          '<ul class="points">' + e.points.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" +
+        "</article>" +
+      "</div>";
+    }).join("");
+    setupTabs($("#expPanels").parentNode, ".tab", ".tabpanel");
+  }
+
+  function renderProjects() {
+    var list = resume.projects;
+    var cats = [];
+    list.forEach(function (p) { if (cats.indexOf(p.cat) === -1) cats.push(p.cat); });
+    $("#projTabs").innerHTML = cats.map(function (cat, i) {
+      return '<button class="tab" type="button" role="tab" id="proj-tab-' + i + '" aria-controls="proj-panel-' + i + '" aria-selected="' + (i === 0 ? "true" : "false") + '" tabindex="' + (i === 0 ? "0" : "-1") + '">' + esc(cat) + "</button>";
+    }).join("");
+    $("#projPanels").innerHTML = cats.map(function (cat, i) {
+      var items = list.filter(function (p) { return p.cat === cat; });
+      return '<div class="tabpanel" role="tabpanel" id="proj-panel-' + i + '" aria-labelledby="proj-tab-' + i + '" tabindex="0"' + (i === 0 ? "" : " hidden") + ">" +
+        '<div class="projects">' +
+          items.map(function (p) {
+            return '<article class="proj-card reveal">' +
+              '<div class="proj-top">' +
+                "<div>" +
+                  '<h3 class="proj-name">' + esc(p.name) + "</h3>" +
+                  '<div class="proj-role">' + esc(p.role) + " · " + esc(p.period) + "</div>" +
+                "</div>" +
+                '<span class="proj-tag">' + esc(p.tag) + "</span>" +
+              "</div>" +
+              '<ul class="points">' + p.points.map(function (pt) { return "<li>" + esc(pt) + "</li>"; }).join("") + "</ul>" +
+              '<div class="stack">' + p.stack.map(function (s) { return "<span>" + esc(s) + "</span>"; }).join("") + "</div>" +
+            "</article>";
+          }).join("") +
+        "</div>" +
+      "</div>";
+    }).join("");
+    setupTabs($("#projPanels").parentNode, ".tab", ".tabpanel");
+  }
+
+  function renderSkills() {
+    $("#skillGrid").innerHTML = resume.skills.map(function (g) {
+      return '<article class="skill-card reveal">' +
+        '<h3><span class="sk-ico">' + ICONS.spark + "</span>" + esc(g.group) + "</h3>" +
+        g.items.map(function (it) {
+          return '<div class="skill-row">' +
+            '<div class="top"><span>' + esc(it.name) + "</span>" +
+              '<span class="sk-lv">' + esc(it.label || "") + "</span></div>" +
+            '<div class="bar" role="img" aria-label="' + esc(it.name) + " 熟练度 " + it.level + '%">' +
+              '<i data-level="' + it.level + '"></i>' +
+            "</div>" +
+          "</div>";
+        }).join("") +
+      "</article>";
+    }).join("");
+  }
+
+  function renderEducation() {
+    $("#eduTimeline").innerHTML = resume.education.map(function (e) {
+      return '<div class="tl-item reveal">' +
+        '<div class="exp-head">' +
+          "<div>" +
+            '<h3 class="exp-role">' + esc(e.school) + "</h3>" +
+            '<div class="exp-org">' + esc(e.major) + (e.tag ? '<span class="tag-pill">' + esc(e.tag) + "</span>" : "") + "</div>" +
+          "</div>" +
+          '<span class="exp-period">' + esc(e.period) + "</span>" +
+        "</div>" +
+        '<ul class="points">' + e.points.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" +
+      "</div>";
+    }).join("");
+    $("#awardList").innerHTML = resume.awards.map(function (a) {
+      return '<div class="award">' + ICONS.award + "<span>" + esc(a) + "</span></div>";
+    }).join("");
+  }
+
+  function updateThemeIcon() {
+    var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+    var btn = $("#themeBtn");
+    btn.innerHTML = isDark ? ICONS.sun : ICONS.moon;
+    btn.setAttribute("aria-label", isDark ? "切换到浅色模式" : "切换到深色模式");
+    btn.setAttribute("title", isDark ? "切换到浅色模式" : "切换到深色模式");
+  }
+  function setupTheme() {
+    var btn = $("#themeBtn");
+    btn.innerHTML = ICONS.moon;
+    updateThemeIcon();
+    btn.addEventListener("click", function () {
+      var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try { localStorage.setItem("resume-theme", next); } catch (e) {}
+      updateThemeIcon();
+    });
+  }
+
+  function setupCopyEmail() {
+    var btn = $("#copyEmail");
+    var hint = $("#copyHint");
+    if (!btn || !hint) return;
+    var mail = "3105429861@qq.com";
+    btn.addEventListener("click", function () {
+      var done = function () {
+        btn.innerHTML = ICONS.check + "已复制";
+        hint.textContent = "邮箱已复制：" + mail;
+        hint.classList.add("show");
+        window.setTimeout(function () {
+          btn.innerHTML = ICONS.mail + "复制邮箱";
+          hint.classList.remove("show");
+        }, 2000);
+      };
+      var fail = function () {
+        hint.textContent = "复制失败，邮箱：" + mail;
+        hint.classList.add("show");
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(mail).then(done).catch(function () {
+          try {
+            var ta = document.createElement("textarea");
+            ta.value = mail;
+            ta.setAttribute("readonly", "");
+            ta.style.position = "fixed";
+            ta.style.top = "-1000px";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+            done();
+          } catch (e) { fail(); }
+        });
+      } else {
+        try {
+          var ta = document.createElement("textarea");
+          ta.value = mail;
+          ta.setAttribute("readonly", "");
+          ta.style.position = "fixed";
+          ta.style.top = "-1000px";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+          done();
+        } catch (e) { fail(); }
+      }
+    });
+  }
+
+  var lightboxEl = null;
+  var lastFocus = null;
+  function ensureLightbox() {
+    if (lightboxEl) return lightboxEl;
+    lightboxEl = document.createElement("div");
+    lightboxEl.className = "lightbox";
+    lightboxEl.setAttribute("role", "dialog");
+    lightboxEl.setAttribute("aria-modal", "true");
+    lightboxEl.setAttribute("aria-label", "证书大图预览");
+    lightboxEl.innerHTML =
+      '<button class="lb-close" type="button" aria-label="关闭预览">×</button>' +
+      '<img alt="">' +
+      '<div class="lb-caption"></div>';
+    document.body.appendChild(lightboxEl);
+    lightboxEl.addEventListener("click", function (e) {
+      if (e.target === lightboxEl || e.target.closest(".lb-close")) closeLightbox();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && lightboxEl.classList.contains("show")) closeLightbox();
+    });
+    return lightboxEl;
+  }
+  function openLightbox(src, alt) {
+    if (!src) return;
+    var lb = ensureLightbox();
+    var img = lb.querySelector("img");
+    var cap = lb.querySelector(".lb-caption");
+    img.setAttribute("src", src);
+    img.setAttribute("alt", alt || "");
+    cap.textContent = alt || "";
+    lastFocus = document.activeElement;
+    lb.classList.add("show");
+    document.body.style.overflow = "hidden";
+    var close = lb.querySelector(".lb-close");
+    if (close) close.focus();
+  }
+  function closeLightbox() {
+    if (!lightboxEl) return;
+    lightboxEl.classList.remove("show");
+    document.body.style.overflow = "";
+    window.setTimeout(function () {
+      var img = lightboxEl.querySelector("img");
+      if (img) img.setAttribute("src", "");
+    }, 220);
+    if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus();
+    lastFocus = null;
+  }
+  function setupCertLightbox() {
+    var gallery = document.querySelector(".cert-gallery");
+    if (!gallery) return;
+    gallery.addEventListener("click", function (e) {
+      var img = e.target.closest(".cert-img-wrap img");
+      if (!img) return;
+      openLightbox(img.getAttribute("src"), img.getAttribute("alt"));
+    });
+  }
+
+  function setupPrint() {
+    var doPrint = function () { window.setTimeout(function () { window.print(); }, 50); };
+    var b = $("#printBtn");
+    var h = $("#heroPrint");
+    if (b) b.addEventListener("click", doPrint);
+    if (h) h.addEventListener("click", doPrint);
+  }
+
+  function setupScroll() {
+    var bar = $("#scrollBar");
+    var toTop = $("#toTop");
+    toTop.innerHTML = ICONS.up;
+    var nav = $("#nav");
+    var navLinks = $$("#navLinks a");
+    var quickLinks = $$("#quickNav a");
+    var sections = [];
+    ["highlights", "experience", "projects", "skills", "education"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) sections.push(el);
+    });
+    var docEl = document.documentElement;
+    var ticking = false;
+    function onScroll() {
+      var y = window.pageYOffset || docEl.scrollTop;
+      var max = docEl.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+      if (bar) bar.style.width = (p * 100).toFixed(2) + "%";
+      nav.classList.toggle("scrolled", y > 6);
+      toTop.classList.toggle("show", y > 400);
+      var active = -1;
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].getBoundingClientRect().top <= 120) active = i;
+      }
+      navLinks.forEach(function (a, i) { a.classList.toggle("active", i === active); });
+      quickLinks.forEach(function (a, i) { a.classList.toggle("active", i === active); });
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(onScroll);
+      }
+    }, { passive: true });
+    onScroll();
+    toTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    });
+  }
+
+  var revealObs = null;
+  var barObs = null;
+  function setupObservers() {
+    if ("IntersectionObserver" in window && !reduceMotion) {
+      if (!revealObs) {
+        revealObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              en.target.classList.add("in");
+              revealObs.unobserve(en.target);
+            }
+          });
+        }, { threshold: .08, rootMargin: "0px 0px -30px 0px" });
+      }
+      if (!barObs) {
+        barObs = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              var i = en.target;
+              var lv = i.getAttribute("data-level") || 0;
+              window.setTimeout(function () { i.style.width = lv + "%"; }, 60);
+              barObs.unobserve(i);
+            }
+          });
+        }, { threshold: .25 });
+      }
+    }
+    var nodes = $$(".reveal:not(.in)");
+    if (!revealObs) nodes.forEach(function (n) { n.classList.add("in"); });
+    else nodes.forEach(function (n) { revealObs.observe(n); });
+    var bars = $$(".bar i");
+    if (!barObs) bars.forEach(function (b) { b.style.width = (b.getAttribute("data-level") || 0) + "%"; });
+    else bars.forEach(function (b) { barObs.observe(b); });
+  }
+
+  function init() {
+    renderNav();
+    renderHighlights();
+    renderExperience();
+    renderProjects();
+    renderSkills();
+    renderEducation();
+    setupCertLightbox();
+    setupTheme();
+    setupCopyEmail();
+    setupPrint();
+    setupScroll();
+    $("#year").textContent = new Date().getFullYear();
+    $("#updated").textContent = resume.updated;
+    setupObservers();
+
+    var mq = window.matchMedia("print");
+    var onPrintChange = function (e) {
+      var panels = $$(".tabpanel[hidden]");
+      if (e.matches) {
+        panels.forEach(function (p) {
+          p.setAttribute("data-print-hidden", "true");
+          p.removeAttribute("hidden");
+        });
+        closeLightbox();
+      } else {
+        $$(".tabpanel[data-print-hidden]").forEach(function (p) {
+          p.removeAttribute("data-print-hidden");
+          p.setAttribute("hidden", "");
+        });
+      }
+    };
+    if (mq.addEventListener) mq.addEventListener("change", onPrintChange);
+    else if (mq.addListener) mq.addListener(onPrintChange);
+    window.addEventListener("beforeprint", function () { onPrintChange({ matches: true }); });
+    window.addEventListener("afterprint", function () { onPrintChange({ matches: false }); });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>
